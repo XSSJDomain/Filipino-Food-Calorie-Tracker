@@ -1,138 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pusang Bulk, Asong Cut</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 
-  <!-- Cartoon Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="hero">
-    <div class="pet-box">
-      <img src="assets/cat.gif" class="pet" alt="Bulking Cat">
-      <p>🐱 BULK MODE</p>
-    </div>
+<header class="hero">
+  <h1>🐱 Pusang Bulk, Asong Cut 🐶</h1>
+  <p>Track Calories • Track Protein • Bulk or Cut</p>
+</header>
 
-    <div class="hero-title">
-      <h1>Pusang Bulk, Asong Cut</h1>
-      <p>Eat Like a Cat. Cut Like a Dog.</p>
-    </div>
+<div class="container">
 
-    <div class="pet-box">
-      <img src="assets/dog.gif" class="pet" alt="Cutting Dog">
-      <p>🐶 CUT MODE</p>
-    </div>
-  </header>
+  <!-- Setup -->
+  <section class="card">
+    <h2>Tracker Setup</h2>
 
-  <!-- MAIN APP -->
-  <div class="app">
+    <input id="weight" type="number" placeholder="Weight (kg)">
+    <input id="height" type="number" placeholder="Height (cm)">
+    <input id="age" type="number" placeholder="Age">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <h2>Dashboard</h2>
+    <select id="gender">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
 
-      <ul>
-        <li>🏠 Home</li>
-        <li>🔥 Calories</li>
-        <li>🍗 Protein</li>
-        <li>🍚 Food Tracker</li>
-        <li>📈 Progress</li>
-      </ul>
-    </aside>
+    <select id="activity">
+      <option value="1.2">Sedentary</option>
+      <option value="1.375">Light Activity</option>
+      <option value="1.55">Moderate Activity</option>
+      <option value="1.725">Very Active</option>
+    </select>
 
-    <!-- MAIN CONTENT -->
-    <main class="dashboard">
+    <select id="goal">
+      <option value="maintain">Maintain</option>
+      <option value="bulk">Bulk</option>
+      <option value="cut">Cut</option>
+    </select>
 
-      <!-- TRACKER SETUP -->
-      <section class="card tracker-card">
-        <h2>Tracker Setup</h2>
+    <button onclick="calculateNeeds()">Calculate</button>
+  </section>
 
-        <input type="text" id="trackerName" placeholder="Tracker Name">
+  <!-- Targets -->
+  <section class="card">
+    <h2>Daily Targets</h2>
 
-        <div class="duration-wrapper">
-          <input type="number" id="durationValue" placeholder="Duration">
-          <select id="durationUnit">
-            <option value="weeks">Weeks</option>
-            <option value="months">Months</option>
-          </select>
-        </div>
+    <p>Calories: <span id="caloriesResult">0</span> kcal</p>
+    <p>Protein: <span id="proteinResult">0</span> g</p>
+  </section>
 
-        <input type="number" id="weight" placeholder="Weight (kg)">
-        <input type="number" id="height" placeholder="Height (cm)">
-        <input type="number" id="age" placeholder="Age">
+  <!-- Log Food -->
+  <section class="card">
+    <h2>Log Food</h2>
 
-        <select id="gender">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
+    <select id="foodSelect"></select>
 
-        <select id="activity">
-          <option value="1.2">Sedentary</option>
-          <option value="1.375">Light Activity</option>
-          <option value="1.55">Moderate Activity</option>
-          <option value="1.725">Very Active</option>
-        </select>
+    <select id="unitSelect">
+      <option value="grams">Grams (g)</option>
+      <option value="ounce">Ounce (oz)</option>
+      <option value="ml">Milliliters (ml)</option>
+      <option value="serving">Serving</option>
+      <option value="piece">Piece</option>
+    </select>
 
-        <select id="goal">
-          <option value="maintain">Maintain</option>
-          <option value="bulk">Bulk</option>
-          <option value="cut">Cut</option>
-        </select>
+    <input id="foodAmount" type="number" placeholder="Amount">
 
-        <button onclick="calculateNeeds()">Calculate</button>
-      </section>
+    <button onclick="addFood()">Log Food</button>
 
-      <!-- DAILY TARGETS -->
-      <section class="card targets-card">
-        <h2>Daily Targets</h2>
+    <ul id="foodList"></ul>
 
-        <div class="stat-box">
-          <h3>Calories</h3>
-          <p><span id="caloriesResult">0</span> kcal</p>
-        </div>
+    <p>Total Calories: <span id="totalCalories">0</span></p>
+    <p>Total Protein: <span id="totalProtein">0</span> g</p>
+  </section>
 
-        <div class="stat-box">
-          <h3>Protein</h3>
-          <p><span id="proteinResult">0</span> g</p>
-        </div>
-      </section>
+</div>
 
-      <!-- FOOD TRACKER -->
-      <section class="card food-card">
-        <h2>Food Tracker</h2>
+<script src="foods.js"></script>
+<script src="script.js"></script>
 
-        <select id="foodSelect"></select>
-        <button onclick="addFood()">Add Food</button>
-
-        <ul id="foodList"></ul>
-
-        <div class="totals">
-          <p>Total Calories: <span id="totalCalories">0</span></p>
-          <p>Total Protein: <span id="totalProtein">0</span> g</p>
-        </div>
-      </section>
-
-      <!-- PROGRESS -->
-      <section class="card progress-card">
-        <h2>Progress Chart</h2>
-        <canvas id="progressChart"></canvas>
-      </section>
-
-    </main>
-  </div>
-
-  <script src="foods.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
